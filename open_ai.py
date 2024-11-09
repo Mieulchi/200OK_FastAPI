@@ -13,7 +13,7 @@ load_dotenv()
 # 환경 변수 가져오기
 api_key = os.getenv("OPENAI_API_KEY")
 
-client = OpenAI(api_key = api_key )
+client = OpenAI(api_key = api_key)
 class StoryRequest(BaseModel):
     choice: Optional[str] = None  # 선택적 필드로 설정
     beforeContent: Optional[str] = ""  # 이전 생성된 내용을 저장하는 선택적 필드, 기본값은 빈 문자열
@@ -75,7 +75,7 @@ async def generate_story(request: StoryRequest):
 
     except Exception as e:
         print(f"Error occurred: {e}")
-        raise HTTPException(status_code=500, detail=f"Error generating story: {e}")
+        raise HTTPException(status_code=500, detail="Error generating story: {e}")
 
 # FastAPI 실행 코드
 if __name__ == "__main__":
