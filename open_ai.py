@@ -14,13 +14,69 @@ load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(api_key = api_key )
+class MonoRequest(BaseModel):
+    content: Optional[str] = "" #이미지 묘사 텍스트
 class StoryRequest(BaseModel):
     choice: Optional[str] = None  # 선택적 필드로 설정
     beforeContent: Optional[str] = ""  # 이전 생성된 내용을 저장하는 선택적 필드, 기본값은 빈 문자열
 class ImageRequest(BaseModel):
     description: Optional[str] = None #이미지 묘사 텍스트
 
-#이미지 생성
+
+
+#로딩 독백 대사
+@app.post("/generate_monologue")
+async def generate_monologue(request: MonoRequest):
+
+    content = request.content
+
+    content_message = f"플레이어가 처한 상황은 {content}이야."
+
+    try:
+        # OpenAI API 호출하여 스토리 생성
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo-1106",
+            response_format={"type":"json_object"},     
+          messages=[
+    {
+        "role": "system",
+        "content": (
+            "스토리기반 어드벤처 게임에서 현재 상황을 기반으로 플레이어가 하는 생각과 독백들을 만드는 AI야. .json"
+            "이 게임에서 플레이어는 우주비행을 하다 아마존으로 불시착하여 아마존 정글에 고립되어 생존을 해야하는 상황이야 "
+            "주어진 상황과 플레이어가 선택한 선택지를 기반으로 플레이어가 할법한 생각과 독백대사들을 한 문장씩 10개 생성해줘."
+            "플레이어는 두려움에 차있는 상태야"
+            "말투는 부드럽고 감정적인 말투로 해줘"
+            "말은 항상 한글로 해."
+            "반환 형식은 JSON 형식으로 10개의 대사를 리스트에 담아 반환해야 하고, 필드는 다음과 같아:"
+            "-`monologue`: 플레이어가 현재 상황에서 할만한 말"
+            
+        )
+    },
+    {
+        "role": "user",
+        "content": content_message 
+    }
+]
+
+
+        )
+
+     # 응답 내용에 접근할 때 속성 접근 방식 사용
+        message_content = response.choices[0].message.content
+
+        # JSON으로 파싱
+        parsed_content = json.loads(message_content)  
+
+        return parsed_content
+
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        raise HTTPException(status_code=500, detail=f"Error generating monologue: {e}")
+
+
+
+
+ #이미지 생성
 @app.post("/generate_image")
 async def generate_story(request: ImageRequest):
     desc = request.description
