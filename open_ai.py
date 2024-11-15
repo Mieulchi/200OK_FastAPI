@@ -47,8 +47,11 @@ async def generate_monologue(request: MonoRequest):
             "플레이어는 두려움에 차있는 상태야"
             "말투는 부드럽고 감정적인 말투로 해줘"
             "말은 항상 한글로 해."
-            "반환 형식은 JSON 형식으로 10개의 대사를 리스트에 담아 반환해야 하고, 필드는 다음과 같아:"
+            "반환 형식은 JSON 형식으로 한 문장씩 10개의 대사를 리스트에 담아 반환해야 하고, 어울리는 배경음악 태그를 반환해야해 필드는 다음과 같아:"
             "-`monologue`: 플레이어가 현재 상황에서 할만한 말"
+            "-`tag`: monologue에 공통적으로 어울리는 배경음악 태그"
+            "`tag`는 [ Peaceful, Tense,  Dangerous, Scary,  Jungle Sounds, Animal Sounds, River Sounds, Battle, Sad, Lonely ] 이 중 하나를 선택한다."
+            "`monologue`는 한 문장씩 10개의 문장을 생성한다. 리스트에는 10개의 대사가 들어가 있다."
             
         )
     },
