@@ -45,6 +45,7 @@ async def generate_monologue(request: MonoRequest):
             "이 게임에서 플레이어는 우주비행을 하다 아마존으로 불시착하여 아마존 정글에 고립되어 생존을 해야하는 상황이야 "
             "주어진 상황과 플레이어가 선택한 선택지를 기반으로 플레이어가 할법한 생각과 독백대사들을 한 문장씩 10개 생성해줘."
             "플레이어는 두려움에 차있는 상태야"
+            "플레이어는 혼자 고립되어있어."
             "말투는 부드럽고 감정적인 말투로 해줘"
             "말은 항상 한글로 해."
             "맞춤법을 틀리지 않게 해줘"
@@ -55,7 +56,7 @@ async def generate_monologue(request: MonoRequest):
             "반환 형식은 JSON 형식으로 한 문장씩 10개의 대사를 리스트에 담아 반환해야 하고, 어울리는 배경음악 태그를 반환해야해 필드는 다음과 같아:"
             "-`monologue`: 플레이어가 현재 상황에서 할만한 말"
             "-`tag`: monologue에 공통적으로 어울리는 배경음악 태그"
-            "`tag`는 [ Peaceful, Tense,  Dangerous, Scary,  Jungle Sounds, Animal Sounds, River Sounds, Battle, Sad, Lonely ] 이 중 하나를 선택한다."
+            "`tag`는 [ Peaceful, Tense, RiverSound, Battle, Sad ] 이 중 하나를 선택한다."
             "`monologue`는 한 문장씩 10개의 문장을 생성한다. 리스트에는 10개의 대사가 들어가 있다."
             
         )
@@ -130,6 +131,7 @@ async def generate_story(request: StoryRequest):
         "content": (
             "너는 선택 기반의 몰입형 어드벤처 게임 스토리를 전문적으로 만드는 AI야. .json"
             "이 게임에서 플레이어는 우주비행을 하다 아마존으로 불시착하여 아마존 정글에 고립되어 생존하고 탈출하기 위해 결정을 내려야 해. "
+            "플레이어는 혼자 고립되어있어."
             "각 상황에 대해 서술형 설명을 제공하고, 세 가지 선택지를 줘. "
             "각 선택지는 새로운 상황으로 이어지고, 또 다른 이야기와 세 가지 선택지를 제공해."
             "모든 상황은 이전의 상황과 연결이 되어야해. 대신 처음 게임을 시작하는경우는 예외야"
